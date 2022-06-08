@@ -16,8 +16,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class GGHoGD extends javax.swing.JPanel {
+
     DefaultTableModel defaultTableModel;
     HGDsevice dsevice;
+
     /**
      * Creates new form GGHoGD
      */
@@ -26,12 +28,12 @@ public class GGHoGD extends javax.swing.JPanel {
         initComponents();
         btnThem.setEnabled(false);
         loadMAHGD();
-        defaultTableModel = new DefaultTableModel(){
+        defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-            
+
         };
         defaultTableModel.addColumn("MÃ HỘ GIA ĐÌNH ");
         defaultTableModel.addColumn("TÊN CHỦ HỘ ");
@@ -41,15 +43,16 @@ public class GGHoGD extends javax.swing.JPanel {
         HGDTABLE.setModel(defaultTableModel);
         setData(dsevice.getALL());
     }
-    public void loadMAHGD()
-    {
-        HGDsevice dsevice  = new HGDsevice();
+
+    public void loadMAHGD() {
+        HGDsevice dsevice = new HGDsevice();
         List<HGDObject> list = dsevice.getALL();
         TenHOGD.removeAllItems();
         for (HGDObject hGDObject : list) {
-             TenHOGD.addItem(hGDObject.getMahgd());
+            TenHOGD.addItem(hGDObject.getMahgd());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,7 +254,7 @@ public class GGHoGD extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -291,10 +294,10 @@ public class GGHoGD extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(319, 319, 319)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(310, 310, 310))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,6 +316,7 @@ public class GGHoGD extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jPanel1);
 
         add(jScrollPane2);
+        jScrollPane2.getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -322,12 +326,10 @@ public class GGHoGD extends javax.swing.JPanel {
         hgd.setTenchuho(TENCHTF.getText());
         hgd.setSoCMND(SOCMNDTF.getText());
         hgd.setSltv(Integer.valueOf(SLTVTF.getText()));
-        if(dsevice.CheckADD(MAHGDTF.getText()) == 1)
-        {
-            JOptionPane.showMessageDialog(this, "Mã hộ gia đình '"+MAHGDTF.getText()+"' đã tồn tại","Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Thêm thành công","Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        if (dsevice.CheckADD(MAHGDTF.getText()) == 1) {
+            JOptionPane.showMessageDialog(this, "Mã hộ gia đình '" + MAHGDTF.getText() + "' đã tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             dsevice.ThemHGD(hgd);
             defaultTableModel.setRowCount(0);
             setData(dsevice.getALL());
@@ -338,49 +340,45 @@ public class GGHoGD extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         int row = HGDTABLE.getSelectedRow();
-        if(row == -1)
-        {
-            JOptionPane.showMessageDialog(this, "VUI LÒNG CHỌN DÒNG CẦN XÓA", "LỖI !",JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "VUI LÒNG CHỌN DÒNG CẦN XÓA", "LỖI !", JOptionPane.ERROR_MESSAGE);
+        } else {
             int comfirm = JOptionPane.showConfirmDialog(this, "BẠN CÓ CHẮC CHẮN MUỐN XÓA KHÔNG ?");
-            if(comfirm == JOptionPane.YES_OPTION)
-            {
-                 String mahgd = String.valueOf(HGDTABLE.getValueAt(row, 0));
-                 dsevice.XoaHGD(mahgd);
-                 defaultTableModel.setRowCount(0);
-                 setData(dsevice.getALL());
-                 ClearText();
+            if (comfirm == JOptionPane.YES_OPTION) {
+                String mahgd = String.valueOf(HGDTABLE.getValueAt(row, 0));
+                dsevice.XoaHGD(mahgd);
+                defaultTableModel.setRowCount(0);
+                setData(dsevice.getALL());
+                ClearText();
             }
-            
+
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongActionPerformed
         // TODO add your handling code here:
         int comfirm = JOptionPane.showConfirmDialog(this, "BẠN CÓ CHẮC CHẮN MUỐN THOÁT KHÔNG ?");
-        if(comfirm == JOptionPane.YES_OPTION)
-        {
+        if (comfirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_btnDongActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        
-       HGDObject hgd = new HGDObject();
+
+        HGDObject hgd = new HGDObject();
         hgd.setMahgd(MAHGDTF.getText());
         hgd.setTenchuho(TENCHTF.getText());
         hgd.setSoCMND(SOCMNDTF.getText());
         hgd.setSltv(Integer.valueOf(String.valueOf(SLTVTF.getText())));
-        
+
         dsevice.UpdateHGD(hgd);
         defaultTableModel.setRowCount(0);
         setData(dsevice.getALL());
         ClearText();
     }//GEN-LAST:event_btnSuaActionPerformed
-    void ClearText()
-    {
+
+    void ClearText() {
         MAHGDTF.setText("");
         TENCHTF.setText("");
         SOCMNDTF.setText("");
@@ -399,27 +397,26 @@ public class GGHoGD extends javax.swing.JPanel {
         // TODO add your handling code here:
         String mahgd = String.valueOf(TenHOGD.getSelectedItem());
         List<HGDObject> list = dsevice.getALLBYID(mahgd);
-        
+
         defaultTableModel.setRowCount(0);
         setData(list);
     }//GEN-LAST:event_btnTimkiemActionPerformed
 
     private void MAHGDTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MAHGDTFKeyPressed
         // TODO add your handling code here:
-        if(MAHGDTF.getText().equals(""))
-        {
+        if (MAHGDTF.getText().equals("")) {
             btnThem.setEnabled(false);
-        }else btnThem.setEnabled(true);
+        } else {
+            btnThem.setEnabled(true);
+        }
     }//GEN-LAST:event_MAHGDTFKeyPressed
 
     private void HGDTABLEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HGDTABLEMouseClicked
         // TODO add your handling code here:
         int row = HGDTABLE.getSelectedRow();
-        if(row == -1)
-        {
-            JOptionPane.showMessageDialog(this, "VUI LÒNG CHỌN DÒNG CẦN SỬA", "LỖI !",JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "VUI LÒNG CHỌN DÒNG CẦN SỬA", "LỖI !", JOptionPane.ERROR_MESSAGE);
+        } else {
             String mahgd = String.valueOf(HGDTABLE.getValueAt(row, 0));
             HGDObject hgd = dsevice.getBYID(mahgd);
             MAHGDTF.setText(hgd.getMahgd());
@@ -433,10 +430,9 @@ public class GGHoGD extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_HGDTABLEMouseClicked
 
-    public void setData(List<HGDObject> list)
-    {
+    public void setData(List<HGDObject> list) {
         for (HGDObject hgd : list) {
-            defaultTableModel.addRow(new Object[] {hgd.getMahgd(),hgd.getTenchuho(),hgd.getSoCMND(),hgd.getSltv()});
+            defaultTableModel.addRow(new Object[]{hgd.getMahgd(), hgd.getTenchuho(), hgd.getSoCMND(), hgd.getSltv()});
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

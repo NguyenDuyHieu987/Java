@@ -11,7 +11,6 @@ package com.mycompany.nguyenduyhieu;
 public class NguyenDuyHieu {
 
     public static void main(String[] args) {
-        new Bai2();
 
     }
 }

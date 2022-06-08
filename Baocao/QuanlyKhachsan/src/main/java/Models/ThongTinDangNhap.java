@@ -10,27 +10,18 @@ package Models;
  */
 public class ThongTinDangNhap {
 
-    private String ID;
     private String TaiKhoan;
     private String MatKhau;
     private String Quyen;
 
-    public ThongTinDangNhap(String ID, String TaiKhoan, String MatKhau, String Quyen) {
-        this.ID = ID;
+    public ThongTinDangNhap(String TaiKhoan, String MatKhau, String Quyen) {
+
         this.TaiKhoan = TaiKhoan;
         this.MatKhau = MatKhau;
         this.Quyen = Quyen;
     }
 
     public ThongTinDangNhap() {
-    }
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
     }
 
     public String getTaiKhoan() {

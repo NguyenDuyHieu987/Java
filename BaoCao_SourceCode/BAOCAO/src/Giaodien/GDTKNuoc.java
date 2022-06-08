@@ -15,8 +15,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class GDTKNuoc extends javax.swing.JPanel {
+
     DefaultTableModel defaultTableModel;
     NuocUse NuocUse;
+
     /**
      * Creates new form GDTKNuoc
      */
@@ -25,7 +27,7 @@ public class GDTKNuoc extends javax.swing.JPanel {
         initComponents();
         btnThang.setEnabled(false);
         btnNam.setEnabled(false);
-        defaultTableModel = new DefaultTableModel(){
+        defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -44,7 +46,7 @@ public class GDTKNuoc extends javax.swing.JPanel {
         defaultTableModel.addColumn("Số khôi");
         defaultTableModel.addColumn("Đơn giá");
         defaultTableModel.addColumn("Tổng tiền");
-        
+
         NUOCTABLE.setModel(defaultTableModel);
         defaultTableModel.setRowCount(0);
         setdata(NuocUse.getALL());
@@ -223,16 +225,15 @@ public class GDTKNuoc extends javax.swing.JPanel {
 
         add(jScrollPane2);
     }// </editor-fold>//GEN-END:initComponents
-    public void setdata(List<NuocObject> list)
-    {
+    public void setdata(List<NuocObject> list) {
         for (NuocObject d : list) {
             defaultTableModel.addRow(new Object[]{
-                d.getMahdnc(),d.getTenhd(),d.getManv(),d.getTennv(),
-                d.getNgayin(),d.getMahgd(),d.getTenchuho(),d.getMacanho(),
-                d.getTencanho(),d.getGhichu(),d.getSokhoi(),d.getDongia(),
+                d.getMahdnc(), d.getTenhd(), d.getManv(), d.getTennv(),
+                d.getNgayin(), d.getMahgd(), d.getTenchuho(), d.getMacanho(),
+                d.getTencanho(), d.getGhichu(), d.getSokhoi(), d.getDongia(),
                 d.getTongtien()
             });
-            
+
         }
     }
     private void btnThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThangActionPerformed
@@ -253,19 +254,21 @@ public class GDTKNuoc extends javax.swing.JPanel {
 
     private void ThangCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThangCBActionPerformed
         // TODO add your handling code here:
-        if(ThangCB.getSelectedIndex() == 0)
-        {
+        if (ThangCB.getSelectedIndex() == 0) {
             btnThang.setEnabled(false);
-        }else  btnThang.setEnabled(true);
+        } else {
+            btnThang.setEnabled(true);
+        }
     }//GEN-LAST:event_ThangCBActionPerformed
 
     private void NamTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NamTFKeyPressed
         // TODO add your handling code here:
-        if(NamTF.getText().equals(""))
-        btnNam.setEnabled(false);
-        else btnNam.setEnabled(true);
+        if (NamTF.getText().equals("")) {
+            btnNam.setEnabled(false);
+        } else {
+            btnNam.setEnabled(true);
+        }
     }//GEN-LAST:event_NamTFKeyPressed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable NUOCTABLE;

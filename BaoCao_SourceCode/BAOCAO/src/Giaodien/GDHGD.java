@@ -29,14 +29,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class GDHGD extends javax.swing.JPanel {
+
     DefaultTableModel defaultTableModel;
     Thanhviensevice thanhviensevice;
     DienUse dien = new DienUse();
-    DienObject dienOB ;
+    DienObject dienOB;
     NuocUse nc = new NuocUse();
-    NuocObject ncOB ;
-    private  JPanel child;
+    NuocObject ncOB;
+    private JPanel child;
     String mahogd = "";
+
     /**
      * Creates new form GDHGD01
      */
@@ -48,47 +50,40 @@ public class GDHGD extends javax.swing.JPanel {
         ncOB = nc.getOnebyMahgd(mahgd);
         initComponents();
         lbTiltle.setText(mahgd);
-        HopdongObject hd =hduse.getOnebymaHGD(mahgd);
+        HopdongObject hd = hduse.getOnebymaHGD(mahgd);
         Date date = new Date();
         String time = hd.getThoihan();
         String text = "";
         DateFormat dateFM = new SimpleDateFormat("yyyy-MM-dd");
-        if(dateFM.parse(time).compareTo(date) <= 0)
-        {
-            text = mahgd+" cần gia hạn hợp đồng";
+        if (dateFM.parse(time).compareTo(date) <= 0) {
+            text = mahgd + " cần gia hạn hợp đồng";
             lbif.setText(text);
         }
-        if(dienOB.getTrangthai().equals("Chưa đóng"))
-        {
-            if(text != "")
-            {
-                text+= ", thanh toán HĐ điện";
+        if (dienOB.getTrangthai().equals("Chưa đóng")) {
+            if (text != "") {
+                text += ", thanh toán HĐ điện";
                 lbif.setText(text);
-            }
-            else {
-                text = mahgd +" cần thanh toán HĐ điện";
+            } else {
+                text = mahgd + " cần thanh toán HĐ điện";
                 lbif.setText(text);
             }
         }
-        if(ncOB.getTrangthai().equals("Chưa đóng"))
-        {
-            if(text != "")
-            {
-                text+= ", thanh toán HĐ nước";
+        if (ncOB.getTrangthai().equals("Chưa đóng")) {
+            if (text != "") {
+                text += ", thanh toán HĐ nước";
                 lbif.setText(text);
-            }
-            else {
-                text = mahgd +" cần thanh toán HĐ nước";
+            } else {
+                text = mahgd + " cần thanh toán HĐ nước";
                 lbif.setText(text);
             }
         }
-        
-        defaultTableModel = new DefaultTableModel(){
+
+        defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-            
+
         };
         defaultTableModel.addColumn("MÃ THÀNH VIÊN");
         defaultTableModel.addColumn("TÊN THÀNH VIÊN");
@@ -98,17 +93,18 @@ public class GDHGD extends javax.swing.JPanel {
         defaultTableModel.addColumn("SỐ CMND");
         defaultTableModel.addColumn("EMAIL");
         defaultTableModel.addColumn("GIỚI TÍNH");
-         
+
         TBHGD01.setModel(defaultTableModel);
         setDATA(thanhviensevice.getOnebyMHGD(mahgd));
-        
+
     }
-    public void setDATA(List<ThanhvienObject> list)
-    {
+
+    public void setDATA(List<ThanhvienObject> list) {
         for (ThanhvienObject tv : list) {
-             defaultTableModel.addRow(new Object[]{tv.getMatv(),tv.getTentv(),tv.getSdt(),tv.getNgaysinh(),tv.getMahgd(),tv.getSdt(),tv.getEmail(),tv.getGioitinh()});
+            defaultTableModel.addRow(new Object[]{tv.getMatv(), tv.getTentv(), tv.getSdt(), tv.getNgaysinh(), tv.getMahgd(), tv.getSdt(), tv.getEmail(), tv.getGioitinh()});
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -317,24 +313,20 @@ public class GDHGD extends javax.swing.JPanel {
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
         int comfirm = JOptionPane.showConfirmDialog(this, "BẠN CÓ CHẮC CHẮN MUỐN THOÁT KHÔNG ?");
-        if(comfirm == JOptionPane.YES_OPTION)
-        {
+        if (comfirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-         if(evt.getKeyCode() == KeyEvent.VK_ESCAPE)
-        {
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             int comfirm = JOptionPane.showConfirmDialog(this, "BẠN CÓ CHẮC CHẮN MUỐN THOÁT KHÔNG ?");
-            if(comfirm == JOptionPane.YES_OPTION)
-            {
+            if (comfirm == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
         }
     }//GEN-LAST:event_formKeyPressed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_main;

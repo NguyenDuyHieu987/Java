@@ -6,12 +6,26 @@ package Interface;
 
 import Controllers.DangNhapController;
 import Models.ThongTinDangNhap;
+import java.awt.TextField;
 import java.awt.event.KeyEvent;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -19,11 +33,32 @@ import javax.swing.JOptionPane;
  */
 public class DangNhap extends javax.swing.JFrame {
 
+    private DangNhapController dangNhapController;
+
     /**
      * Creates new form DangNhap
+     *
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.InvalidKeyException
+     * @throws javax.crypto.NoSuchPaddingException
+     * @throws javax.crypto.IllegalBlockSizeException
+     * @throws javax.crypto.BadPaddingException
      */
-    public DangNhap() {
+    public DangNhap() throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         initComponents();
+        dangNhapController = new DangNhapController();
+        ThongTinDangNhap thongTinDangNhap = dangNhapController.GetRememberAccount();
+
+        if (thongTinDangNhap != null) {
+            cbxNhoMK.setSelected(true);
+            txtTaiKhoan.setText(thongTinDangNhap.getTaiKhoan());
+            txtMatKhau.setText(DecryptPassword(thongTinDangNhap.getMatKhau(), "hieusen123"));
+        } else {
+            cbxNhoMK.setSelected(false);
+            txtTaiKhoan.setText(null);
+            txtMatKhau.setText(null);
+        }
     }
 
     /**
@@ -38,12 +73,14 @@ public class DangNhap extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtTaiKhoan = new javax.swing.JTextField();
-        txtMatKhau = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        txtMatKhau = new javax.swing.JPasswordField();
+        cbxNhoMK = new javax.swing.JCheckBox();
+        cbxHienMK = new javax.swing.JCheckBox();
         btnThoat = new javax.swing.JButton();
         btnDangNhap = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         background_dangnhap = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,22 +95,42 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Quản lý khách sạn");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 4, 550, 50));
-        jPanel1.add(txtTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 160, 30));
 
-        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauActionPerformed(evt);
+        txtTaiKhoan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTaiKhoanKeyPressed(evt);
             }
         });
-        jPanel1.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 160, 30));
+        jPanel1.add(txtTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 200, 30));
 
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jCheckBox1.setText("Nhớ mật khẩu");
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
+        txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMatKhauKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 200, 30));
+
+        cbxNhoMK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxNhoMK.setText("Nhớ mật khẩu");
+        cbxNhoMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxNhoMKActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbxNhoMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, -1, -1));
+
+        cbxHienMK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxHienMK.setText("Hiện mật khẩu");
+        cbxHienMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxHienMKActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbxHienMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
 
         btnThoat.setBackground(new java.awt.Color(255, 102, 102));
         btnThoat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnThoat.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\Exit.png")); // NOI18N
+        btnThoat.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\logout.png")); // NOI18N
         btnThoat.setText("Thoát");
         btnThoat.setBorder(null);
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
@@ -81,11 +138,11 @@ public class DangNhap extends javax.swing.JFrame {
                 btnThoatActionPerformed(evt);
             }
         });
-        jPanel1.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 100, 40));
+        jPanel1.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, 100, 40));
 
         btnDangNhap.setBackground(new java.awt.Color(102, 204, 255));
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnDangNhap.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\arrow.png")); // NOI18N
+        btnDangNhap.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\log-in.png")); // NOI18N
         btnDangNhap.setText("Đăng nhập");
         btnDangNhap.setAlignmentY(0.0F);
         btnDangNhap.setBorder(null);
@@ -94,24 +151,22 @@ public class DangNhap extends javax.swing.JFrame {
                 btnDangNhapActionPerformed(evt);
             }
         });
-        btnDangNhap.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnDangNhapKeyPressed(evt);
-            }
-        });
-        jPanel1.add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 120, 40));
+        jPanel1.add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 120, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Tài khoản");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Mật khẩu");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\user.png")); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, -1));
 
         background_dangnhap.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\background-dep-lam-khung-anh_110341384.jpg")); // NOI18N
         background_dangnhap.setText("jLabel4");
-        jPanel1.add(background_dangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 430));
+        jPanel1.add(background_dangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 430));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 430));
 
@@ -120,64 +175,97 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
-        try {
-            if (txtTaiKhoan.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-            if (txtMatKhau.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-            DangNhapController dangNhapController = new DangNhapController();
-
-            boolean checkLogin = dangNhapController.DangNhapHeThong(txtTaiKhoan.getText(), txtMatKhau.getText());
-            if (checkLogin == true) {
-
-                TrangChu mainMenu = new TrangChu();
-                mainMenu.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Tài khoản, mật khẩu không chính xác", "Thông báo", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
-        }
+        DangNhap();
     }//GEN-LAST:event_btnDangNhapActionPerformed
-
-    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnThoatActionPerformed
 
-    private void btnDangNhapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDangNhapKeyPressed
+    private String EncryptPassword(String strToEncrypt, String myKey) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        byte[] key = myKey.getBytes("UTF-8");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16);
+        SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+    }
+
+    public static String DecryptPassword(String strToDecrypt, String myKey) throws UnsupportedEncodingException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException {
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        byte[] key = myKey.getBytes("UTF-8");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16);
+        SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+    }
+
+    public void DangNhap() {
+        try {
+            if (txtTaiKhoan.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (txtMatKhau.getPassword().equals("")) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            boolean check = dangNhapController.DangNhapHeThong(txtTaiKhoan.getText(), EncryptPassword(String.valueOf(txtMatKhau.getPassword()), "hieusen123"));
+            if (check == true) {
+                if (cbxNhoMK.isSelected() == true) {
+                    dangNhapController.UpdateRememberAccount(txtTaiKhoan.getText(), EncryptPassword(String.valueOf(txtMatKhau.getPassword()), "hieusen123"), 1);
+                    dangNhapController.UpdateRemainAccount(txtTaiKhoan.getText(), EncryptPassword(String.valueOf(txtMatKhau.getPassword()), "hieusen123"));
+                } else {
+                    dangNhapController.UpdateRememberAccount(txtTaiKhoan.getText(), EncryptPassword(String.valueOf(txtMatKhau.getPassword()), "hieusen123"), 0);
+                    dangNhapController.UpdateRemainAccount(txtTaiKhoan.getText(), EncryptPassword(String.valueOf(txtMatKhau.getPassword()), "hieusen123"));
+
+                }
+                this.dispose();
+                TrangChu trangchu = new TrangChu(txtTaiKhoan.getText(), EncryptPassword(String.valueOf(txtMatKhau.getPassword()), "hieusen123"));
+                trangchu.setLocationRelativeTo(this);
+                trangchu.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error" + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void txtMatKhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                // TODO add your handling code here:
-                if (txtTaiKhoan.getText().equals("")) {
-                    JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                String ps = String.valueOf(txtMatKhau.getPassword());
-                if (ps.equals("")) {
-                    JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                List<TaikhoanObject> nd = TKUse.GetTKMK(userName.getText(), String.valueOf(Password.getPassword()));
-                if (nd.size() > 0) {
-                    new Trangchu().setVisible(true);
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "TÀI KHOẢN HOẶC MẬT KHẨU KHÔNG CHÍNH XÁC !", "LỖI", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(DANGNHAP.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            DangNhap();
         }
-    }//GEN-LAST:event_btnDangNhapKeyPressed
+    }//GEN-LAST:event_txtMatKhauKeyPressed
+
+    private void txtTaiKhoanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTaiKhoanKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtMatKhau.requestFocus();
+        }
+    }//GEN-LAST:event_txtTaiKhoanKeyPressed
+
+    private void cbxHienMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHienMKActionPerformed
+        // TODO add your handling code here:
+        if (cbxHienMK.isSelected() == true) {
+            txtMatKhau.setEchoChar((char) 0);
+        } else {
+            txtMatKhau.setEchoChar('*');
+
+        }
+    }//GEN-LAST:event_cbxHienMKActionPerformed
+
+    private void cbxNhoMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNhoMKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxNhoMKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,7 +297,13 @@ public class DangNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DangNhap().setVisible(true);
+                try {
+                    DangNhap dangNhap = new DangNhap();
+                    dangNhap.setLocationRelativeTo(null);
+                    dangNhap.setVisible(true);
+                } catch (NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+                    Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -218,12 +312,14 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel background_dangnhap;
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnThoat;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox cbxHienMK;
+    private javax.swing.JCheckBox cbxNhoMK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtMatKhau;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtTaiKhoan;
     // End of variables declaration//GEN-END:variables
 }
