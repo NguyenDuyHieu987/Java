@@ -206,6 +206,8 @@ public final class TrangChu extends javax.swing.JFrame {
         btnQLNhanVien = new javax.swing.JMenuItem();
         btnQuanLyTK = new javax.swing.JMenuItem();
         MenuItemQLThue_Tra = new javax.swing.JMenuItem();
+        MenuitemQLDoDung = new javax.swing.JMenuItem();
+        MenuitemQLDichVu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -542,7 +544,7 @@ public final class TrangChu extends javax.swing.JFrame {
                         .addGroup(ListPhongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jMenuBar1.setMinimumSize(new java.awt.Dimension(249, 40));
@@ -588,6 +590,24 @@ public final class TrangChu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(MenuItemQLThue_Tra);
+
+        MenuitemQLDoDung.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        MenuitemQLDoDung.setText("Quản lý đồ dùng");
+        MenuitemQLDoDung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuitemQLDoDungActionPerformed(evt);
+            }
+        });
+        jMenu1.add(MenuitemQLDoDung);
+
+        MenuitemQLDichVu.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        MenuitemQLDichVu.setText("Quản lý dịch vụ");
+        MenuitemQLDichVu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuitemQLDichVuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(MenuitemQLDichVu);
 
         jMenuBar1.add(jMenu1);
 
@@ -657,7 +677,7 @@ public final class TrangChu extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(ListPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ListPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -742,7 +762,9 @@ public final class TrangChu extends javax.swing.JFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             this.dispose();
             try {
-                new DangNhap().setVisible(true);
+                DangNhap dangNhap = new DangNhap();
+                dangNhap.setLocationRelativeTo(null);
+                dangNhap.setVisible(true);
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
                 Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -764,7 +786,9 @@ public final class TrangChu extends javax.swing.JFrame {
         if (dangNhapController.GetRoleCurrentAcount(TaiKhoan, MatKhau).equals("ADMIN")) {
             this.dispose();
             try {
-                new frmQLTaiKhoan(TaiKhoan, MatKhau).setVisible(true);
+                frmQLTaiKhoan fQLTaiKhoan = new frmQLTaiKhoan(TaiKhoan, MatKhau);
+                fQLTaiKhoan.setLocationRelativeTo(null);
+                fQLTaiKhoan.setVisible(true);
             } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -832,6 +856,23 @@ public final class TrangChu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void MenuitemQLDoDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuitemQLDoDungActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        formQuanlyDoDung fQuanlyDoDung = new formQuanlyDoDung(TaiKhoan, MatKhau);
+        fQuanlyDoDung.setLocationRelativeTo(this);
+        fQuanlyDoDung.setVisible(true);
+
+    }//GEN-LAST:event_MenuitemQLDoDungActionPerformed
+
+    private void MenuitemQLDichVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuitemQLDichVuActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        formQuanLyDichVu fQuanLyDichVu = new formQuanLyDichVu(TaiKhoan, MatKhau);
+        fQuanLyDichVu.setLocationRelativeTo(this);
+        fQuanLyDichVu.setVisible(true);
+    }//GEN-LAST:event_MenuitemQLDichVuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -870,6 +911,8 @@ public final class TrangChu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ListPhong;
     private javax.swing.JMenuItem MenuItemQLThue_Tra;
+    private javax.swing.JMenuItem MenuitemQLDichVu;
+    private javax.swing.JMenuItem MenuitemQLDoDung;
     private javax.swing.JPopupMenu PopupMenuPhong;
     private javax.swing.JButton btnHome;
     private javax.swing.JMenuItem btnLogOut_Toolbar;

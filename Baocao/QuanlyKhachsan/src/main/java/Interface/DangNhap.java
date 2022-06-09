@@ -80,6 +80,7 @@ public class DangNhap extends javax.swing.JFrame {
         btnDangNhap = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         background_dangnhap = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,14 +101,14 @@ public class DangNhap extends javax.swing.JFrame {
                 txtTaiKhoanKeyPressed(evt);
             }
         });
-        jPanel1.add(txtTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 200, 30));
+        jPanel1.add(txtTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 200, 30));
 
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtMatKhauKeyPressed(evt);
             }
         });
-        jPanel1.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 200, 30));
+        jPanel1.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 200, 30));
 
         cbxNhoMK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbxNhoMK.setText("Nhớ mật khẩu");
@@ -116,7 +117,7 @@ public class DangNhap extends javax.swing.JFrame {
                 cbxNhoMKActionPerformed(evt);
             }
         });
-        jPanel1.add(cbxNhoMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        jPanel1.add(cbxNhoMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, -1, -1));
 
         cbxHienMK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbxHienMK.setText("Hiện mật khẩu");
@@ -125,7 +126,7 @@ public class DangNhap extends javax.swing.JFrame {
                 cbxHienMKActionPerformed(evt);
             }
         });
-        jPanel1.add(cbxHienMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
+        jPanel1.add(cbxHienMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
 
         btnThoat.setBackground(new java.awt.Color(255, 102, 102));
         btnThoat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -137,7 +138,7 @@ public class DangNhap extends javax.swing.JFrame {
                 btnThoatActionPerformed(evt);
             }
         });
-        jPanel1.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, 100, 40));
+        jPanel1.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, 100, 40));
 
         btnDangNhap.setBackground(new java.awt.Color(102, 204, 255));
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -150,15 +151,18 @@ public class DangNhap extends javax.swing.JFrame {
                 btnDangNhapActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 120, 40));
+        jPanel1.add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 120, 40));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Tài khoản");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Mật khẩu");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\user.png")); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, -1));
 
         background_dangnhap.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\background-dep-lam-khung-anh_110341384.jpg")); // NOI18N
         background_dangnhap.setText("jLabel4");
@@ -313,6 +317,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtTaiKhoan;

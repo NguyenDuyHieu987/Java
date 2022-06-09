@@ -13,12 +13,12 @@ public class ThongKe {
     private String MaThongKe;
     private String TenThongKe;
     private String GhiChu;
-    private float DoanhThu;
+    private double DoanhThu;
 
     public ThongKe() {
     }
 
-    public ThongKe(String MaThongKe, String TenThongKe, String GhiChu, float DoanhThu) {
+    public ThongKe(String MaThongKe, String TenThongKe, String GhiChu, double DoanhThu) {
         this.MaThongKe = MaThongKe;
         this.TenThongKe = TenThongKe;
         this.GhiChu = GhiChu;
@@ -37,8 +37,8 @@ public class ThongKe {
         return TenThongKe;
     }
 
-    public void setTenThongKe(String TenThonKe) {
-        this.TenThongKe = TenThonKe;
+    public void setTenThongKe(String TenThongKe) {
+        this.TenThongKe = TenThongKe;
     }
 
     public String getGhiChu() {
@@ -49,11 +49,11 @@ public class ThongKe {
         this.GhiChu = GhiChu;
     }
 
-    public float getDoanhThu() {
+    public double getDoanhThu() {
         return DoanhThu;
     }
 
-    public void setDoanhThu(float DoanhThu) {
+    public void setDoanhThu(double DoanhThu) {
         this.DoanhThu = DoanhThu;
     }
 

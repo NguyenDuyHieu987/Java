@@ -34,7 +34,7 @@ public class PhongController {
             preparedStatement.setString(2, phong.getTenPhong());
             preparedStatement.setString(3, phong.getDienTich());
             preparedStatement.setString(4, phong.getTienNghi());
-            preparedStatement.setFloat(5, phong.getGia());
+            preparedStatement.setDouble(5, phong.getGia());
             preparedStatement.setString(6, phong.getTrangThai());
 
             int kt = preparedStatement.executeUpdate();
@@ -72,7 +72,7 @@ public class PhongController {
                 phong.setTenPhong(rs.getString("TenPhong"));
                 phong.setDienTich(rs.getString("DienTich"));
                 phong.setTienNghi(rs.getString("TienNghi"));
-                phong.setGia(rs.getFloat("Gia"));
+                phong.setGia(rs.getDouble("Gia"));
                 phong.setTrangThai(rs.getString("TrangThai"));
 
                 listPhongs.add(phong);
@@ -110,7 +110,7 @@ public class PhongController {
                 phong.setTenPhong(rs.getString("TenPhong"));
                 phong.setDienTich(rs.getString("DienTich"));
                 phong.setTienNghi(rs.getString("TienNghi"));
-                phong.setGia(rs.getFloat("Gia"));
+                phong.setGia(rs.getDouble("Gia"));
                 phong.setTrangThai(rs.getString("TrangThai"));
 
                 listPhongs.add(phong);
@@ -139,7 +139,7 @@ public class PhongController {
             cs.setString(1, phong.getTenPhong());
             cs.setString(2, phong.getDienTich());
             cs.setString(3, phong.getTienNghi());
-            cs.setFloat(4, phong.getGia());
+            cs.setDouble(4, phong.getGia());
             cs.setString(5, phong.getTrangThai());
             cs.setString(6, phong.getMaPhong());
 

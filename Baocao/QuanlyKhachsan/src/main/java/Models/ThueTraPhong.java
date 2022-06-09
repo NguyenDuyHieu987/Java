@@ -12,23 +12,43 @@ public class ThueTraPhong {
 
     private String MaThue;
     private String MaPhong;
+    private String TenPhong;
     private String MaKH;
+    private String TenKH;
     private String NgayBD;
     private String NgayKT;
-    private Float TongTien;
+    private double TongTien;
     private String TrangThai;
 
     public ThueTraPhong() {
     }
 
-    public ThueTraPhong(String MaThue, String MaPhong, String MaKH, String NgayBD, String NgayKT, Float TongTien, String TrangThai) {
+    public ThueTraPhong(String MaThue, String MaPhong, String TenPhong, String MaKH, String TenKH, String NgayBD, String NgayKT, double TongTien, String TrangThai) {
         this.MaThue = MaThue;
         this.MaPhong = MaPhong;
+        this.TenPhong = TenPhong;
         this.MaKH = MaKH;
+        this.TenKH = TenKH;
         this.NgayBD = NgayBD;
         this.NgayKT = NgayKT;
         this.TongTien = TongTien;
         this.TrangThai = TrangThai;
+    }
+
+    public String getTenPhong() {
+        return TenPhong;
+    }
+
+    public void setTenPhong(String TenPhong) {
+        this.TenPhong = TenPhong;
+    }
+
+    public String getTenKH() {
+        return TenKH;
+    }
+
+    public void setTenKH(String TenKH) {
+        this.TenKH = TenKH;
     }
 
     public String getMaThue() {
@@ -71,11 +91,11 @@ public class ThueTraPhong {
         this.NgayKT = NgayKT;
     }
 
-    public Float getTongTien() {
+    public double getTongTien() {
         return TongTien;
     }
 
-    public void setTongTien(Float TongTien) {
+    public void setTongTien(double TongTien) {
         this.TongTien = TongTien;
     }
 

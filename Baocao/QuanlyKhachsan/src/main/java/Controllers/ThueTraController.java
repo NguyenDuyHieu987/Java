@@ -5,6 +5,7 @@
 package Controllers;
 
 import Database.ConnectDB;
+import Models.DichVuDaThue;
 import Models.ThueTraPhong;
 import Models.KhachHang;
 import java.sql.CallableStatement;
@@ -132,7 +133,7 @@ public class ThueTraController {
                 thueTraPhong.setMaKH(rs.getString("MaKH"));
                 thueTraPhong.setNgayBD(rs.getString("NgayBD"));
                 thueTraPhong.setNgayKT(rs.getString("NgayKT"));
-                thueTraPhong.setTongTien(rs.getFloat("TongTien"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
                 thueTraPhong.setTrangThai(rs.getString("TrangThai"));
 
                 listThueTraPhongs.add(thueTraPhong);
@@ -171,7 +172,7 @@ public class ThueTraController {
                 thueTraPhong.setMaKH(rs.getString("MaKH"));
                 thueTraPhong.setNgayBD(rs.getString("NgayBD"));
                 thueTraPhong.setNgayKT(rs.getString("NgayKT"));
-                thueTraPhong.setTongTien(rs.getFloat("TongTien"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
                 thueTraPhong.setTrangThai(rs.getString("TrangThai"));
 
                 listThueTraPhongs.add(thueTraPhong);
@@ -213,7 +214,7 @@ public class ThueTraController {
                 thueTraPhong.setMaKH(rs.getString("MaKH"));
                 thueTraPhong.setNgayBD(rs.getString("NgayBD"));
                 thueTraPhong.setNgayKT(rs.getString("NgayKT"));
-                thueTraPhong.setTongTien(rs.getFloat("TongTien"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
                 thueTraPhong.setTrangThai(rs.getString("TrangThai"));
 
                 listThueTraPhongs.add(thueTraPhong);
@@ -251,7 +252,7 @@ public class ThueTraController {
                 thueTraPhong.setMaKH(rs.getString("MaKH"));
                 thueTraPhong.setNgayBD(rs.getString("NgayBD"));
                 thueTraPhong.setNgayKT(rs.getString("NgayKT"));
-                thueTraPhong.setTongTien(rs.getFloat("TongTien"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
                 thueTraPhong.setTrangThai(rs.getString("TrangThai"));
 
                 listThueTraPhongs.add(thueTraPhong);
@@ -289,7 +290,7 @@ public class ThueTraController {
                 thueTraPhong.setMaKH(rs.getString("MaKH"));
                 thueTraPhong.setNgayBD(rs.getString("NgayBD"));
                 thueTraPhong.setNgayKT(rs.getString("NgayKT"));
-                thueTraPhong.setTongTien(rs.getFloat("TongTien"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
                 thueTraPhong.setTrangThai(rs.getString("TrangThai"));
 
                 listThueTraPhongs.add(thueTraPhong);
@@ -626,7 +627,7 @@ public class ThueTraController {
                 thueTraPhong.setMaKH(rs.getString("MaKH"));
                 thueTraPhong.setNgayBD(rs.getString("NgayBD"));
                 thueTraPhong.setNgayKT(rs.getString("NgayKT"));
-                thueTraPhong.setTongTien(rs.getFloat("TongTien"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
                 thueTraPhong.setTrangThai(rs.getString("TrangThai"));
 
                 listthThueTraPhongs.add(thueTraPhong);
@@ -685,6 +686,7 @@ public class ThueTraController {
             conn.commit();
             conn.setAutoCommit(true);
             rs.close();
+            rs1.close();
             conn.close();
             return listkhKhachHangs;
 
@@ -694,4 +696,41 @@ public class ThueTraController {
         return null;
     }
 
+    public List<ThueTraPhong> SearchThue_ChuaThanhToan_TenKH_TenPhong() {
+        List<ThueTraPhong> listThueTraPhongs = new ArrayList<>();
+
+        try {
+            Connection conn = ConnectDB.GetConnection();
+
+            String SqlQuery = "SELECT MaThue, Phong.TenPhong, KhachHang.TenKH, ThuePhong.TongTien \n"
+                    + "    FROM ThuePhong, Phong, KhachHang \n"
+                    + "    WHERE ThuePhong.MaPhong = Phong.MaPhong AND KhachHang.MaKH = ThuePhong.MaKH\n"
+                    + "    AND ThuePhong.TrangThai = N'Chưa thanh toán';";
+
+            conn.setAutoCommit(false);
+            PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                ThueTraPhong thueTraPhong = new ThueTraPhong();
+
+                thueTraPhong.setMaThue(rs.getString("MaThue"));
+                thueTraPhong.setTenPhong(rs.getString("TenPhong"));
+                thueTraPhong.setTenKH(rs.getString("TenKH"));
+                thueTraPhong.setTongTien(rs.getDouble("TongTien"));
+
+                listThueTraPhongs.add(thueTraPhong);
+            }
+
+            conn.commit();
+            conn.setAutoCommit(true);
+            rs.close();
+            conn.close();
+            return listThueTraPhongs;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+        }
+        return null;
+    }
 }

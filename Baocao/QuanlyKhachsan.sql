@@ -70,6 +70,168 @@ INSERT INTO Phong(MaPhong, TenPhong, DienTich, TienNghi, Gia, TrangThai) VALUES
     ('PH11', N'Phòng 11', '35m2', N'Điều hòa, Nóng lạnh, Bồn ngâm, Tivi, Tủ lạnh, Máy giặt', 450000, N'Chưa thuê'),
     ('PH12', N'Phòng 12', '40m2', N'Điều hòa, Nóng lạnh, Bồn ngâm, Tivi, Tủ lạnh, Máy giặt', 500000, N'Chưa thuê');
 
+
+
+
+CREATE TABLE DichVu(
+    TenDichVu NVARCHAR(100) PRIMARY KEY,
+    GiaTrenGio FLOAT,
+)
+
+DROP TABLE DichVu
+
+SELECT * FROM DichVu
+
+INSERT INTO DichVu(TenDichVu, GiaTrenGio) VALUES
+    (N'Karaoke', 50000),
+    (N'Dặt ủi và dọn dẹp phòng', 50000),
+    (N'Giữ trẻ', 50000);
+
+
+
+
+CREATE TABLE DichVuDaThue(
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    MaThue VARCHAR(10) NOT NULL,
+    TenDichVu  NVARCHAR(100) NOT NULL,
+	CONSTRAINT Fr_MaThue FOREIGN KEY (MaThue) REFERENCES ThuePhong(MaThue),
+    CONSTRAINT Fr_TenDichVu FOREIGN KEY (TenDichVu) REFERENCES DichVu(TenDichVu),
+    SoGio INT,
+    TongTien FLOAT
+)
+
+DROP TABLE DichVuDaThue
+
+SELECT * FROM DichVuDaThue
+
+-- INSERT INTO DichVuDaThue(MaThue, TenDichVu, SoGio, TongTien) VALUES
+
+
+UPDATE DichVuDaThue SET SoGio =  SoGio + 10 WHERE MaThue = 'THUE01' AND TenDichVu = N'Giữ trẻ'
+
+------- Cập nhật tổng tiền của dịch vụ đã thuê
+GO
+
+CREATE PROC CapNhatTongTienDichVu
+@MaThue VARCHAR(10),
+@TenDichVu  NVARCHAR(100) AS
+BEGIN
+    UPDATE DichVuDaThue
+        SET TongTien = SoGio * (SELECT GiaTrenGio FROM DichVu WHERE TenDichVu = @TenDichVu)
+        WHERE MaThue = @MaThue AND TenDichVu = @TenDichVu
+    
+    UPDATE ThuePhong 
+        SET TongTien = TongTien + (SELECT SUM(TongTien) 
+                                        FROM DichVuDaThue 
+                                        WHERE MaThue = @MaThue)
+        WHERE MaThue = @MaThue
+
+
+    UPDATE ThuePhong
+		SET TongTien = ((SELECT Gia FROM Phong, ThuePhong WHERE Phong.MaPhong = ThuePhong.MaPhong AND ThuePhong.MaThue = @MaThue)
+         * (SELECT DATEDIFF(DAY, NgayBD, NgayKT) FROM ThuePhong WHERE MaThue = @MaThue)) 
+         + (SELECT SUM(TongTien) FROM DichVuDaThue WHERE MaThue = @MaThue)
+         + (SELECT SUM(TongTien) FROM DoDungHongMat WHERE MaThue = @MaThue)
+		WHERE MaThue = @MaThue
+
+END
+
+EXEC CapNhatTongTienDichVu @MaThue = 'THUE01', @TenDichVu = 'Karaoke';
+
+DROP PROC CapNhatTongTienDichVu
+
+
+
+CREATE TABLE DoDung (
+    TenDo NVARCHAR(100) PRIMARY KEY,
+    DonGia FLOAT,
+)
+
+DROP TABLE DoDung
+
+SELECT * FROM DoDung
+
+INSERT INTO DoDung(TenDo, DonGia) VALUES
+    (N'Tivi', 5000000),
+    (N'Tủ lạnh', 6000000),
+    (N'Máy giặt', 4000000),
+    (N'Bếp từ', 2000000),
+    (N'Vòi sen', 300000),
+    (N'Bồn cầu', 5000000),
+    (N'Chăn', 700000),
+    (N'Đệm', 1000000),
+    (N'Gương trang điểm', 400000),
+    (N'Gương nhà tắm', 500000),
+    (N'Máy sấy', 450000),
+    (N'Gối', 200000),
+    (N'Cốc', 50000),
+    (N'Ghế', 400000);
+
+
+
+
+CREATE TABLE DoDungTrongPhong(
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    MaPhong VARCHAR(10) NOT NULL,
+    CONSTRAINT Fr_MaPhong_DoDung FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
+    TenDo NVARCHAR(100) NOT NULL,
+    CONSTRAINT Fr_TenDo_DoDung FOREIGN KEY (TenDo) REFERENCES DoDung(TenDo),
+    SoLuong INT
+)
+
+DROP TABLE DoDungTrongPhong
+
+SELECT * FROM DoDungTrongPhong
+
+INSERT INTO DoDungTrongPhong(MaPhong, TenDo, SoLuong) VALUES
+    ('PH12', 'Tivi', 66);
+
+
+
+
+CREATE TABLE DoDungHongMat(
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    MaThue VARCHAR(10) NOT NULL,
+    TenDo  NVARCHAR(100) NOT NULL,
+	CONSTRAINT Fr_MaThue2 FOREIGN KEY (MaThue) REFERENCES ThuePhong(MaThue),
+    CONSTRAINT Fr_TenDo FOREIGN KEY (TenDo) REFERENCES DoDung(TenDo),
+    SoLuong INT,
+    TongTien FLOAT
+)
+
+DROP TABLE DoDungHongMat
+
+SELECT * FROM DoDungHongMat
+
+-- INSERT INTO DoDungHongMat(MaThue, TenDo, SoLuong, TongTien) VALUES
+
+
+------- Cập nhật tổng tiền của đồ làm mất, hỏng
+GO
+
+CREATE PROC CapNhatTongTienDoMatHong
+@MaThue VARCHAR(10),
+@TenDo  NVARCHAR(100) AS
+BEGIN
+    UPDATE DoDungHongMat
+        SET TongTien = SoLuong  * (SELECT DonGia FROM DoDung WHERE TenDo = @TenDo)
+        WHERE MaThue = @MaThue AND TenDo = @TenDo
+
+
+    UPDATE ThuePhong
+		SET TongTien = ((SELECT Gia FROM Phong, ThuePhong WHERE Phong.MaPhong = ThuePhong.MaPhong AND ThuePhong.MaThue = @MaThue)
+         * (SELECT DATEDIFF(DAY, NgayBD, NgayKT) FROM ThuePhong WHERE MaThue = @MaThue)) 
+         + (SELECT SUM(TongTien) FROM DoDungHongMat WHERE MaThue = @MaThue)
+         + (SELECT SUM(TongTien) FROM DichVuDaThue WHERE MaThue = @MaThue)
+		WHERE MaThue = @MaThue
+END
+
+
+EXEC CapNhatTongTienDoMatHong @MaThue = 'THUE01', @TenDo = 'Ghế';
+
+
+DROP PROC CapNhatTongTienDoMatHong
+
 CREATE TABLE KhachHang(
     MaKH VARCHAR(10) PRIMARY KEY,
     TenKH NVARCHAR(100),
@@ -84,6 +246,9 @@ SELECT * FROM KhachHang
 
 INSERT INTO KhachHang(MaKH, TenKH, SDT, DiaChi, GioiTinh) VALUES
     ('KH01', N'Nguyễn Duy Hiếu', 11111111, N'Hà Nội', N'Nam');
+
+
+
 
 CREATE TABLE ThuePhong(
     MaThue VARCHAR(10) PRIMARY KEY,
@@ -109,7 +274,8 @@ INSERT INTO ThuePhong(MaThue, MaPhong, MaKH, NgayBD, NgayKT, TongTien, TrangThai
     ('THUE05', 'PH12', 'KH01',  '2022-06-01', '2022-06-11', 0, N'Đã thanh toán'),
     ('THUE06', 'PH12', 'KH01',  '2022-06-01', '2022-06-11', 0, N'Đã thanh toán');
 
-SELECT SUM()
+
+
 
 SELECT KhachHang.* 
     FROM ThuePhong, KhachHang 
@@ -139,9 +305,10 @@ SELECT KhachHang.MaKH
 DELETE FROM ThuePhong WHERE MaThue = 'THUE01';
 
 GO
+
+
+
 --- Trả phòng cập nhật trạng thái trả tiền, trạng thái phòng
-
-
 
 CREATE PROC TraPhong
 @MaThue VARCHAR(10) AS
@@ -152,6 +319,10 @@ BEGIN
 	UPDATE Phong 
 		SET TrangThai = N'Chưa thuê'
 		WHERE MaPhong = (SELECT MaPhong FROM ThuePhong WHERE MaThue = @MaThue)
+    
+    DELETE FROM DichVuDaThue WHERE MaThue = @MaThue
+    DELETE FROM DoDungHongMat WHERE MaThue = @MaThue
+
 END
 
 EXEC TraPhong @MaThue = 'THUE01';
@@ -173,7 +344,7 @@ BEGIN
 
     UPDATE ThuePhong 
 		SET TongTien = @TongTien * (SELECT DATEDIFF(DAY, NgayBD, NgayKT) FROM INSERTED)
-		WHERE MaPhong = (SELECT MaPhong FROM INSERTED)
+		WHERE MaThue = (SELECT MaThue FROM INSERTED)
 END
 
 DROP TRIGGER Trigger_Insert_Phong
@@ -190,13 +361,21 @@ CREATE PROC CapNhatGia_Phong
 @TrangThai  NVARCHAR(20),
 @MaPhong VARCHAR(10) AS
 BEGIN
+    DECLARE @Gia_old FLOAT
+
+    SELECT @Gia_old = Gia FROM Phong WHERE MaPhong = @MaPhong
+
     UPDATE Phong 
 		SET TenPhong = @TenPhong , DienTich = @DienTich , TienNghi = @TienNghi,
          Gia = @Gia, TrangThai = @TrangThai
         WHERE MaPhong = @MaPhong;
 
 	UPDATE ThuePhong 
-		SET TongTien = @Gia
+		SET TongTien = TongTien - (@Gia_old * (SELECT DATEDIFF(DAY, NgayBD, NgayKT)))
+		WHERE MaPhong = @MaPhong
+
+	UPDATE ThuePhong 
+		SET TongTien = TongTien + (@Gia * (SELECT DATEDIFF(DAY, NgayBD, NgayKT)))
 		WHERE MaPhong = @MaPhong
 END
 
@@ -229,7 +408,7 @@ DROP PROC CapNhatPhong_KhiSua
 
 EXEC CapNhatPhong_KhiSua @MaPhong_new = 'PH01', @NgayBD ='2022-06-01', @NgayKT ='2022-06-11', @MaThue='THUE01';
 
---- Xóa thuê cập nhật khách hàng
+--- Xóa thuê phòng cập nhật khách hàng
 GO
 
 CREATE TRIGGER Trigger_Delete_ThuePhong ON ThuePhong FOR DELETE 
@@ -240,7 +419,7 @@ BEGIN
 
 	SELECT @MaKH = MaKH FROM DELETED
 
-        DELETE FROM KhachHang WHERE MaKH = @MaKH
+    DELETE FROM KhachHang WHERE MaKH = @MaKH
 END
 
 DROP TRIGGER Trigger_Delete_ThuePhong
@@ -264,7 +443,7 @@ SELECT SUM(TongTien)
 	From ThuePhong
 	WHERE YEAR(NgayBD) = 2022 AND  YEAR(NgayKT) = 2022 AND TrangThai = N'Đã thanh toán';
 
-INSERT INTO ThongKe (MaThongKe, TenThonKe, GhiChu, DoanhThu) VALUES
+-- INSERT INTO ThongKe (MaThongKe, TenThonKe, GhiChu, DoanhThu) VALUES
 
 SELECT * FROM ThongKe
 

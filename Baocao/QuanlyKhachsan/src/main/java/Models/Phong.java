@@ -14,13 +14,13 @@ public class Phong {
     private String TenPhong;
     private String DienTich;
     private String TienNghi;
-    private float Gia;
+    private double Gia;
     private String TrangThai;
 
     public Phong() {
     }
 
-    public Phong(String MaPhong, String TenPhong, String DienTich, String TienNghi, float Gia, String TrangThai) {
+    public Phong(String MaPhong, String TenPhong, String DienTich, String TienNghi, double Gia, String TrangThai) {
         this.MaPhong = MaPhong;
         this.TenPhong = TenPhong;
         this.DienTich = DienTich;
@@ -61,11 +61,11 @@ public class Phong {
         this.TienNghi = TienNghi;
     }
 
-    public float getGia() {
+    public double getGia() {
         return Gia;
     }
 
-    public void setGia(float Gia) {
+    public void setGia(double Gia) {
         this.Gia = Gia;
     }
 
