@@ -8,20 +8,37 @@ import Controllers.DichVuController;
 import Controllers.DoDungController;
 import Controllers.ThueTraController;
 import Models.DichVuDaThue;
+import Models.DoDung;
 import Models.DoDungMatHong;
+import Models.HoaDon;
 import Models.KhachHang;
 import Models.ThueTraPhong;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFChartSheet;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -300,6 +317,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
         btnThuePhong = new javax.swing.JButton();
         btnTraPhong = new javax.swing.JButton();
         btnTinhTien = new javax.swing.JButton();
+        In = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         btnRollBack = new javax.swing.JButton();
         rdThue = new javax.swing.JRadioButton();
@@ -326,7 +344,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ THUÊ, TRẢ PHÒNG");
-        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, -2, 1150, 50));
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, -2, 1190, 50));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin khách hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
@@ -609,6 +627,9 @@ public class frmThueTraPhong extends javax.swing.JFrame {
         spinnerCoc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         spinnerCoc.setModel(new javax.swing.SpinnerNumberModel(0, 0, 6, 1));
 
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(151, 66));
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(151, 66));
+
         listDoHong_Mat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         listDoHong_Mat.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Tivi", "Tủ lạnh", "Máy giặt", "Bếp từ", "Vòi sen", "Bồn cầu", "Chăn", "Đệm", "Gương trang điểm", "Gương nhà tắm" };
@@ -648,8 +669,8 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                         .addComponent(lbGhe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(spinnerGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane4))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,13 +681,12 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                     .addComponent(spinnerGoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbGoi))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(spinnerGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbGhe)
-                        .addComponent(spinnerCoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spinnerGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbGhe)
+                    .addComponent(spinnerCoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbCoc)))
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -695,7 +715,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                                             .addComponent(jLabel12))
                                         .addGap(32, 32, 32)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtNgayKT, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                                            .addComponent(txtNgayKT)
                                             .addComponent(txtNgayBD, javax.swing.GroupLayout.Alignment.TRAILING)))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(btnClearThue)
@@ -794,7 +814,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -897,6 +917,17 @@ public class frmThueTraPhong extends javax.swing.JFrame {
             }
         });
 
+        In.setBackground(new java.awt.Color(255, 153, 102));
+        In.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        In.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\printing.png")); // NOI18N
+        In.setText("In");
+        In.setBorder(null);
+        In.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -907,6 +938,8 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(In, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnTinhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnThuePhong, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -933,7 +966,8 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                     .addComponent(btnTraPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThuePhong, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTinhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(In, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -986,11 +1020,6 @@ public class frmThueTraPhong extends javax.swing.JFrame {
         rdKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         rdKhachHang.setSelected(true);
         rdKhachHang.setText("Khách hàng");
-        rdKhachHang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdKhachHangActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1032,7 +1061,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1191, Short.MAX_VALUE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1479,10 +1508,6 @@ public class frmThueTraPhong extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void rdKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdKhachHangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdKhachHangActionPerformed
-
     private void btnRollBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollBackActionPerformed
         // TODO add your handling code here:
         setEnable_KH(true);
@@ -1673,7 +1698,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                         return;
                     }
                 }
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có tính tiền thuê của khách hàng có mã thuê '"
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có muốn tính tiền thuê của khách hàng có mã thuê '"
                         + txtMaThue.getText() + "' không?", "Thông báo", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     //                    Các dịch vụ
@@ -1741,6 +1766,82 @@ public class frmThueTraPhong extends javax.swing.JFrame {
         setEnable_KH(true);
     }//GEN-LAST:event_btnClearKHActionPerformed
 
+    private void InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (txtMaThue.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập hoặc chọn mã thuê", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                List<ThueTraPhong> listhueThueTraPhong = thueTraController.SearchThue_ChuaThanhToan();
+                for (ThueTraPhong thueTraPhong : listhueThueTraPhong) {
+                    if (txtMaThue.getText().equals(thueTraPhong.getMaThue())) {
+                        JOptionPane.showMessageDialog(null, "Khách hàng chưa thanh toán", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                        txtMaThue.requestFocus();
+                        return;
+                    }
+                }
+                JFileChooser fileChooser = new JFileChooser("D:\\xls");
+                fileChooser.setDialogTitle("Save as");
+                // chọn định dạng files excel
+                FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("FILE EXCELS", "xlsx", "xls");
+                fileChooser.setFileFilter(extensionFilter);
+                int extenchooser = fileChooser.showSaveDialog(null);
+                FileOutputStream fileOutputStream = null;
+                BufferedOutputStream bos = null;
+                XSSFWorkbook excelJtable = null;
+                if (extenchooser == JFileChooser.APPROVE_OPTION) {
+
+                    try {
+                        // import excel poi libraries to netbeans
+                        excelJtable = new XSSFWorkbook();
+                        XSSFSheet fSheet = excelJtable.createSheet("HÓA ĐƠN");
+                        defaultTableModelThue = (DefaultTableModel) tbThue.getModel();
+                        int row = tbThue.getSelectedRow();
+                        XSSFRow fRow = fSheet.createRow(0);
+
+                        List<String> listhoDons = thueTraController.InHoaDon(txtMaThue.getText());
+                        for (int i = 0; i < listhoDons.size(); i++) {
+                            XSSFCell cell = fRow.createCell(i);
+
+                            cell.setCellValue(listhoDons.get(i));
+                        }
+
+                        // mở file kiểu nguyên thủy này giúp mở file có kí tự
+                        fileOutputStream = new FileOutputStream(fileChooser.getSelectedFile() + ".xlsx");
+                        // dùng bộ nhớ điệm để lưu dữ liệu giúp cho việc xuất dữ liệu ko thông qua luồng trực tiếp mà thông qua luồng đệm nên lấy dự liệu nhanh hơn
+                        bos = new BufferedOutputStream(fileOutputStream);
+                        try {
+                            excelJtable.write(bos);
+                        } catch (IOException ex) {
+                            Logger.getLogger(frmThueTraPhong.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        JOptionPane.showMessageDialog(null, "XUẤT FILE EXCEL THÀNH CÔNG");
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(frmThueTraPhong.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+                            if (bos != null) {
+                                bos.close();
+                            }
+                            if (fileOutputStream != null) {
+                                fileOutputStream.close();
+                            }
+                            if (excelJtable != null) {
+                                excelJtable.close();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "In thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }//GEN-LAST:event_InActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1789,6 +1890,7 @@ public class frmThueTraPhong extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton In;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClearKH;
     private javax.swing.JButton btnClearThue;

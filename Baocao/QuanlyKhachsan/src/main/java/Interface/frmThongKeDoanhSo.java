@@ -6,6 +6,7 @@ package Interface;
 
 import Controllers.ThongKeController;
 import Models.ThongKe;
+import java.awt.HeadlessException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,6 +18,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmThongKeDoanhSo extends javax.swing.JFrame {
 
+    private String TaiKhoan;
+    private String MatKhau;
+    private DefaultTableModel defaultTableModel;
+    private ThongKeController thongKeController;
+
     /**
      * Creates new form frmThongKeDoanhSo
      */
@@ -24,11 +30,6 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         initComponents();
         InsertDataTable();
     }
-
-    private String TaiKhoan;
-    private String MatKhau;
-    private DefaultTableModel defaultTableModel;
-    private ThongKeController thongKeController;
 
     /**
      * Creates new form frmPhong
@@ -38,6 +39,11 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         this.TaiKhoan = TK;
         this.MatKhau = MK;
         InsertDataTable();
+        cbYear.setEnabled(false);
+        cbYearEnd.setEnabled(false);
+
+        spnMonth.setEnabled(true);
+        spnMonthEnd.setEnabled(true);
     }
 
     public void InsertDataTable() {
@@ -99,6 +105,7 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbThongKe = new javax.swing.JTable();
@@ -113,12 +120,24 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        btnThongKeThang = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        spnMonthEnd = new javax.swing.JSpinner();
         cbYear = new javax.swing.JComboBox<>();
-        btnThongKeNam = new javax.swing.JButton();
+        btnThongKeThang = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         spnMonth = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        cbYearEnd = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        rdYear = new javax.swing.JRadioButton();
+        rdMonth = new javax.swing.JRadioButton();
+        jPanel6 = new javax.swing.JPanel();
+        btnSua = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Thống kê");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
@@ -138,6 +157,11 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         tbThongKe.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbThongKe.setCellSelectionEnabled(true);
         tbThongKe.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbThongKeMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbThongKe);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -225,32 +249,161 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("THỐNG KÊ DOANH THU");
-        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, -2, 740, 50));
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, -2, 710, 50));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
+
+        spnMonthEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        spnMonthEnd.setModel(new javax.swing.SpinnerNumberModel(12, 1, 12, 1));
+
+        cbYear.setEditable(true);
+        cbYear.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022", "2021", "2020", "2019", "2018", "2017" }));
 
         btnThongKeThang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnThongKeThang.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\statistics-small.png")); // NOI18N
-        btnThongKeThang.setText("Thống kê theo tháng");
+        btnThongKeThang.setText("Thống kê");
         btnThongKeThang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThongKeThangActionPerformed(evt);
             }
         });
 
-        cbYear.setEditable(true);
-        cbYear.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022", "2021", "2020", "2019", "2018", "2017" }));
-
-        btnThongKeNam.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnThongKeNam.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\trend.png")); // NOI18N
-        btnThongKeNam.setText("Thống kê theo năm");
-        btnThongKeNam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThongKeNamActionPerformed(evt);
-            }
-        });
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Đến năm:");
 
         spnMonth.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         spnMonth.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Từ năm:");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Đến tháng");
+
+        cbYearEnd.setEditable(true);
+        cbYearEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbYearEnd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022", "2021", "2020", "2019", "2018", "2017" }));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Từ tháng:");
+
+        buttonGroup1.add(rdYear);
+        rdYear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rdYear.setText("Theo năm");
+        rdYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdYearActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rdMonth);
+        rdMonth.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rdMonth.setSelected(true);
+        rdMonth.setText("Theo tháng");
+        rdMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdMonthActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spnMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnMonthEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbYearEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(rdMonth)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdYear)
+                        .addGap(51, 51, 51)
+                        .addComponent(btnThongKeThang)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdMonth)
+                    .addComponent(rdYear)
+                    .addComponent(btnThongKeThang, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spnMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(spnMonthEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(cbYearEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chỉnh sửa thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
+
+        btnSua.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSua.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\refresh.png")); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\bin.png")); // NOI18N
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -258,28 +411,19 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnThongKeThang)
-                .addGap(18, 18, 18)
-                .addComponent(spnMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(btnThongKeNam)
-                .addGap(18, 18, 18)
-                .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnThongKeThang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThongKeNam, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spnMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -289,14 +433,11 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,12 +445,12 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -326,75 +467,146 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
     private void btnThongKeThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeThangActionPerformed
         // TODO add your handling code here:
         try {
-
-            if (txtMaThongKe.getText().equals("") || txtTenThongKe.getText().equals("") || txtGhiChu.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            } else {
-                List<ThongKe> listthThongKes = thongKeController.GetAllThongKe();
-                for (ThongKe thongKe : listthThongKes) {
-                    if (txtMaThongKe.getText().equals(thongKe.getMaThongKe())) {
-                        JOptionPane.showMessageDialog(null, "Mã thống kê đã tồn tại", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                        txtMaThongKe.requestFocus();
-                        return;
+            if (rdYear.isSelected()) {
+                if (txtMaThongKe.getText().equals("") || txtTenThongKe.getText().equals("") || txtGhiChu.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    List<ThongKe> listthThongKes = thongKeController.GetAllThongKe();
+                    for (ThongKe thongKe : listthThongKes) {
+                        if (txtMaThongKe.getText().equals(thongKe.getMaThongKe())) {
+                            JOptionPane.showMessageDialog(null, "Mã thống kê đã tồn tại", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                            txtMaThongKe.requestFocus();
+                            return;
+                        }
                     }
-                }
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có muốn thống kê tháng " + spnMonth.getValue() + " không?", "Thông báo", JOptionPane.YES_NO_OPTION);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    Float DoanhThu = thongKeController.ThongKe_Thang((Integer) spnMonth.getValue());
-                    ThongKe thongKe = new ThongKe();
+                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn có muốn thống kê tháng " + spnMonth.getValue() + " không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        Double DoanhThu = thongKeController.ThongKe_Thang((Integer) spnMonth.getValue(), (Integer) spnMonthEnd.getValue());
 
-                    thongKe.setMaThongKe(txtMaThongKe.getText());
-                    thongKe.setTenThongKe(txtTenThongKe.getText());
-                    thongKe.setGhiChu(txtGhiChu.getText());
-                    thongKe.setDoanhThu(DoanhThu);
+                        ThongKe thongKe = new ThongKe();
+                        thongKe.setMaThongKe(txtMaThongKe.getText());
+                        thongKe.setTenThongKe(txtTenThongKe.getText());
+                        thongKe.setGhiChu(txtGhiChu.getText());
+                        thongKe.setDoanhThu(DoanhThu);
 
-                    boolean check = thongKeController.ThemThongKe(thongKe);
-                    if (check == true) {
-                        JOptionPane.showMessageDialog(null, "Thống kê thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        //                defaultTableModel.setRowCount(0);
-                        clearDataTable();
-                        LoadDataTable();
-                        ClearTextField();
-                        txtMaThongKe.requestFocus();
+                        boolean check = thongKeController.ThemThongKe(thongKe);
+                        if (check == true) {
+                            JOptionPane.showMessageDialog(null, "Thống kê thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                            //                defaultTableModel.setRowCount(0);
+                            clearDataTable();
+                            LoadDataTable();
+                            ClearTextField();
+                            txtMaThongKe.requestFocus();
 
+                        }
                     }
-                }
 
+                }
+            } else if (rdMonth.isSelected()) {
+                if (txtMaThongKe.getText().equals("") || txtTenThongKe.getText().equals("") || txtGhiChu.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    List<ThongKe> listthThongKes = thongKeController.GetAllThongKe();
+                    for (ThongKe thongKe : listthThongKes) {
+                        if (txtMaThongKe.getText().equals(thongKe.getMaThongKe())) {
+                            JOptionPane.showMessageDialog(null, "Mã thống kê đã tồn tại", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                            txtMaThongKe.requestFocus();
+                            return;
+                        }
+                    }
+                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn có muốn thống kê năm " + cbYear.getSelectedItem() + " không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        double DoanhThu = thongKeController.ThongKe_Nam(Integer.valueOf(cbYear.getSelectedItem().toString()), Integer.valueOf(cbYearEnd.getSelectedItem().toString()));
+
+                        ThongKe thongKe = new ThongKe();
+
+                        thongKe.setMaThongKe(txtMaThongKe.getText());
+                        thongKe.setTenThongKe(txtTenThongKe.getText());
+                        thongKe.setGhiChu(txtGhiChu.getText());
+                        thongKe.setDoanhThu(DoanhThu);
+
+                        boolean check = thongKeController.ThemThongKe(thongKe);
+                        if (check == true) {
+                            JOptionPane.showMessageDialog(null, "Thống kê thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                            //                defaultTableModel.setRowCount(0);
+                            clearDataTable();
+                            LoadDataTable();
+                            ClearTextField();
+                            txtMaThongKe.requestFocus();
+
+                        }
+                    }
+
+                }
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Thống kê thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_btnThongKeThangActionPerformed
 
-    private void btnThongKeNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeNamActionPerformed
+    private void tbThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbThongKeMouseClicked
+        // TODO add your handling code here:
+        defaultTableModel = (DefaultTableModel) tbThongKe.getModel();
+        int row = tbThongKe.getSelectedRow();
+
+        txtMaThongKe.setText(defaultTableModel.getValueAt(row, 0).toString());
+        txtTenThongKe.setText(defaultTableModel.getValueAt(row, 1).toString());
+        txtGhiChu.setText(defaultTableModel.getValueAt(row, 2).toString());
+
+    }//GEN-LAST:event_tbThongKeMouseClicked
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtMaThongKe.getText().equals("") || txtTenThongKe.getText().equals("") || txtGhiChu.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            if (txtMaThongKe.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn hoặc nhập 1 thống kê cần chỉnh sửa", "Thông báo", JOptionPane.WARNING_MESSAGE);
             } else {
-                List<ThongKe> listthThongKes = thongKeController.GetAllThongKe();
-                for (ThongKe thongKe : listthThongKes) {
-                    if (txtMaThongKe.getText().equals(thongKe.getMaThongKe())) {
-                        JOptionPane.showMessageDialog(null, "Mã thống kê đã tồn tại", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                        txtMaThongKe.requestFocus();
-                        return;
+                if (txtTenThongKe.getText().equals("") || txtGhiChu.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa thống kê " + txtTenThongKe.getText() + " không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        ThongKe thongKe = new ThongKe();
+
+                        thongKe.setMaThongKe(txtMaThongKe.getText());
+                        thongKe.setTenThongKe(txtTenThongKe.getText());
+                        thongKe.setGhiChu(txtGhiChu.getText());
+
+                        boolean check = thongKeController.SuaThongKe(thongKe);
+                        if (check == true) {
+                            JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                defaultTableModel.setRowCount(0);
+                            clearDataTable();
+                            LoadDataTable();
+                            ClearTextField();
+                            txtMaThongKe.requestFocus();
+
+                        }
                     }
                 }
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có muốn thống kê năm " + cbYear.getSelectedItem() + " không?", "Thông báo", JOptionPane.YES_NO_OPTION);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Sửa thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (txtMaThongKe.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn hoặc nhập 1 thống kê cần xóa", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa thống kê " + txtTenThongKe.getText() + " không?", "Thông báo", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    Float DoanhThu = thongKeController.ThongKe_Nam((Integer) cbYear.getSelectedItem());
-                    ThongKe thongKe = new ThongKe();
 
-                    thongKe.setMaThongKe(txtMaThongKe.getText());
-                    thongKe.setTenThongKe(txtTenThongKe.getText());
-                    thongKe.setGhiChu(txtGhiChu.getText());
-                    thongKe.setDoanhThu(DoanhThu);
-
-                    boolean check = thongKeController.ThemThongKe(thongKe);
+                    boolean check = thongKeController.XoaThongKe(txtMaThongKe.getText());
                     if (check == true) {
-                        JOptionPane.showMessageDialog(null, "Thống kê thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                        //                defaultTableModel.setRowCount(0);
+                        JOptionPane.showMessageDialog(null, "Xóa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                defaultTableModel.setRowCount(0);
                         clearDataTable();
                         LoadDataTable();
                         ClearTextField();
@@ -405,11 +617,34 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
 
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Thống kê thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Xóa thất bại", "Thông báo", JOptionPane.ERROR_MESSAGE);
 
         }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
-    }//GEN-LAST:event_btnThongKeNamActionPerformed
+    private void rdMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdMonthActionPerformed
+        // TODO add your handling code here:
+        if (rdMonth.isSelected()) {
+            cbYear.setEnabled(false);
+            cbYearEnd.setEnabled(false);
+
+            spnMonth.setEnabled(true);
+            spnMonthEnd.setEnabled(true);
+
+        }
+    }//GEN-LAST:event_rdMonthActionPerformed
+
+    private void rdYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdYearActionPerformed
+        // TODO add your handling code here:
+        if (rdYear.isSelected()) {
+            spnMonth.setEnabled(false);
+            spnMonthEnd.setEnabled(false);
+
+            cbYear.setEnabled(true);
+            cbYearEnd.setEnabled(true);
+
+        }
+    }//GEN-LAST:event_rdYearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,19 +685,31 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnThongKeNam;
+    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThongKeThang;
+    private javax.swing.JButton btnXoa;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbYear;
+    private javax.swing.JComboBox<String> cbYearEnd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JRadioButton rdMonth;
+    private javax.swing.JRadioButton rdYear;
     private javax.swing.JSpinner spnMonth;
+    private javax.swing.JSpinner spnMonthEnd;
     private javax.swing.JTable tbThongKe;
     private javax.swing.JTextArea txtGhiChu;
     private javax.swing.JTextField txtMaThongKe;

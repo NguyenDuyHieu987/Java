@@ -6,21 +6,49 @@ package Models;
 
 /**
  *
- * @author ddom6
+ * @author ADMIN
  */
 public class DoDungTrongPhong {
 
+    private int ID;
+    private String MaPhong;
+    private String TenPhong;
     private String TenDo;
-    private double DonGia;
     private int SoLuong;
 
     public DoDungTrongPhong() {
     }
 
-    public DoDungTrongPhong(String TenDo, double DonGia, int SoLuong) {
+    public DoDungTrongPhong(int ID, String MaPhong, String TenPhong, String TenDo, int SoLuong) {
+        this.ID = ID;
+        this.MaPhong = MaPhong;
+        this.TenPhong = TenPhong;
         this.TenDo = TenDo;
-        this.DonGia = DonGia;
         this.SoLuong = SoLuong;
+    }
+
+    public String getTenPhong() {
+        return TenPhong;
+    }
+
+    public void setTenPhong(String TenPhong) {
+        this.TenPhong = TenPhong;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getMaPhong() {
+        return MaPhong;
+    }
+
+    public void setMaPhong(String MaPhong) {
+        this.MaPhong = MaPhong;
     }
 
     public String getTenDo() {
@@ -29,14 +57,6 @@ public class DoDungTrongPhong {
 
     public void setTenDo(String TenDo) {
         this.TenDo = TenDo;
-    }
-
-    public double getDonGia() {
-        return DonGia;
-    }
-
-    public void setDonGia(double DonGia) {
-        this.DonGia = DonGia;
     }
 
     public int getSoLuong() {

@@ -8,15 +8,15 @@ package Models;
  *
  * @author ddom6
  */
-public class CacDichVu {
+public class DichVu {
 
     private String TenDichVu;
     private Double GiaTrenGio;
 
-    public CacDichVu() {
+    public DichVu() {
     }
 
-    public CacDichVu(String TenDichVu, Double GiaTrenGio) {
+    public DichVu(String TenDichVu, Double GiaTrenGio) {
         this.TenDichVu = TenDichVu;
         this.GiaTrenGio = GiaTrenGio;
     }

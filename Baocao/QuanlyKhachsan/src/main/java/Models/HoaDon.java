@@ -6,49 +6,29 @@ package Models;
 
 /**
  *
- * @author ADMIN
+ * @author ddom6
  */
-public class ThueTraPhong {
+public class HoaDon {
 
     private String MaThue;
-    private String MaPhong;
-    private String TenPhong;
-    private String MaKH;
     private String TenKH;
+    private String TenPhong;
     private String NgayBD;
     private String NgayKT;
     private double TongTien;
     private String TrangThai;
 
-    public ThueTraPhong() {
+    public HoaDon() {
     }
 
-    public ThueTraPhong(String MaThue, String MaPhong, String TenPhong, String MaKH, String TenKH, String NgayBD, String NgayKT, double TongTien, String TrangThai) {
+    public HoaDon(String MaThue, String TenKH, String TenPhong, String NgayBD, String NgayKT, double TongTien, String TrangThai) {
         this.MaThue = MaThue;
-        this.MaPhong = MaPhong;
-        this.TenPhong = TenPhong;
-        this.MaKH = MaKH;
         this.TenKH = TenKH;
+        this.TenPhong = TenPhong;
         this.NgayBD = NgayBD;
         this.NgayKT = NgayKT;
         this.TongTien = TongTien;
         this.TrangThai = TrangThai;
-    }
-
-    public String getTenPhong() {
-        return TenPhong;
-    }
-
-    public void setTenPhong(String TenPhong) {
-        this.TenPhong = TenPhong;
-    }
-
-    public String getTenKH() {
-        return TenKH;
-    }
-
-    public void setTenKH(String TenKH) {
-        this.TenKH = TenKH;
     }
 
     public String getMaThue() {
@@ -59,20 +39,20 @@ public class ThueTraPhong {
         this.MaThue = MaThue;
     }
 
-    public String getMaPhong() {
-        return MaPhong;
+    public String getTenKH() {
+        return TenKH;
     }
 
-    public void setMaPhong(String MaPhong) {
-        this.MaPhong = MaPhong;
+    public void setTenKH(String TenKH) {
+        this.TenKH = TenKH;
     }
 
-    public String getMaKH() {
-        return MaKH;
+    public String getTenPhong() {
+        return TenPhong;
     }
 
-    public void setMaKH(String MaKH) {
-        this.MaKH = MaKH;
+    public void setTenPhong(String TenPhong) {
+        this.TenPhong = TenPhong;
     }
 
     public String getNgayBD() {

@@ -21,20 +21,20 @@ import javax.swing.JOptionPane;
  */
 public class ThongKeController {
 
-    public float ThongKe_Thang(int Month) {
+    public double ThongKe_Thang(int Month, int MonthEnd) {
         try {
             Connection conn = ConnectDB.GetConnection();
 
             String SqlQuery = "SELECT SUM(TongTien)\n"
                     + "	From ThuePhong\n"
-                    + "	WHERE MONTH(NgayBD) = ? AND  MONTH(NgayKT) = ? AND TrangThai = N'Đã thanh toán';";
+                    + "	WHERE MONTH(NgayBD) = ? AND MONTH(NgayKT) = ? AND TrangThai = N'Đã thanh toán';";
 
             conn.setAutoCommit(false);
             PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
             preparedStatement.setInt(1, Month);
-            preparedStatement.setInt(2, Month);
+            preparedStatement.setInt(2, MonthEnd);
             ResultSet rs = preparedStatement.executeQuery();
-            float DoanhThu = 0;
+            double DoanhThu = 0;
             while (rs.next()) {
                 DoanhThu = rs.getFloat(1);
             }
@@ -53,20 +53,20 @@ public class ThongKeController {
 
     }
 
-    public float ThongKe_Nam(int Year) {
+    public double ThongKe_Nam(int Year, int YearEnd) {
         try {
             Connection conn = ConnectDB.GetConnection();
 
             String SqlQuery = "SELECT SUM(TongTien)\n"
                     + "	From ThuePhong\n"
-                    + "	WHERE YEAR(NgayBD) = ? AND  YEAR(NgayKT) = ? AND TrangThai = N'Đã thanh toán';";
+                    + "	WHERE YEAR(NgayBD) = ? AND YEAR(NgayKT) = ? AND TrangThai = N'Đã thanh toán';";
 
             conn.setAutoCommit(false);
             PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
             preparedStatement.setInt(1, Year);
-            preparedStatement.setInt(2, Year);
+            preparedStatement.setInt(2, YearEnd);
             ResultSet rs = preparedStatement.executeQuery();
-            float DoanhThu = 0;
+            double DoanhThu = 0;
             while (rs.next()) {
                 DoanhThu = rs.getFloat(1);
             }
@@ -97,7 +97,63 @@ public class ThongKeController {
             preparedStatement.setString(1, thongKe.getMaThongKe());
             preparedStatement.setString(2, thongKe.getTenThongKe());
             preparedStatement.setString(3, thongKe.getGhiChu());
-            preparedStatement.setFloat(4, thongKe.getDoanhThu());
+            preparedStatement.setDouble(4, thongKe.getDoanhThu());
+
+            int kt = preparedStatement.executeUpdate();
+
+            conn.commit();
+            conn.setAutoCommit(true);
+            conn.close();
+
+            if (kt == 1) {
+                return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+        }
+        return false;
+
+    }
+
+    public boolean SuaThongKe(ThongKe thongKe) {
+        try {
+            Connection conn = ConnectDB.GetConnection();
+
+            String SqlQuery = "UPDATE ThongKe SET TenThongKe = ?, GhiChu = ? WHERE MaThongKe =?";
+
+            conn.setAutoCommit(false);
+            PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
+
+            preparedStatement.setString(1, thongKe.getTenThongKe());
+            preparedStatement.setString(2, thongKe.getGhiChu());
+            preparedStatement.setString(3, thongKe.getMaThongKe());
+
+            int kt = preparedStatement.executeUpdate();
+
+            conn.commit();
+            conn.setAutoCommit(true);
+            conn.close();
+
+            if (kt == 1) {
+                return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+        }
+        return false;
+
+    }
+
+    public boolean XoaThongKe(String MaThongKe) {
+        try {
+            Connection conn = ConnectDB.GetConnection();
+
+            String SqlQuery = "DELETE FROM ThongKe WHERE MaThongKe = ?";
+
+            conn.setAutoCommit(false);
+            PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
+
+            preparedStatement.setString(1, MaThongKe);
 
             int kt = preparedStatement.executeUpdate();
 
@@ -133,7 +189,7 @@ public class ThongKeController {
                 thongKe.setMaThongKe(rs.getString("MaThongKe"));
                 thongKe.setTenThongKe(rs.getString("TenThongKe"));
                 thongKe.setGhiChu(rs.getString("GhiChu"));
-                thongKe.setDoanhThu(rs.getFloat("DoanhThu"));
+                thongKe.setDoanhThu(rs.getDouble("DoanhThu"));
 
                 listThiThongKes.add(thongKe);
             }

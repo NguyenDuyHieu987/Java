@@ -13,6 +13,7 @@ public class DichVuDaThue {
     private String MaThue;
     private String TenDichVu;
     private int SoGio;
+    private double TongTien;
 
     public DichVuDaThue() {
     }
@@ -20,6 +21,14 @@ public class DichVuDaThue {
     public DichVuDaThue(String TenDichVu, int SoGio) {
         this.TenDichVu = TenDichVu;
         this.SoGio = SoGio;
+    }
+
+    public double getTongTien() {
+        return TongTien;
+    }
+
+    public void setTongTien(double TongTien) {
+        this.TongTien = TongTien;
     }
 
     public String getMaThue() {

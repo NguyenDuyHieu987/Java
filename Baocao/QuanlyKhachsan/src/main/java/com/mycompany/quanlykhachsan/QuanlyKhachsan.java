@@ -4,6 +4,16 @@
  */
 package com.mycompany.quanlykhachsan;
 
+import Interface.DangNhap;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 /**
  *
  * @author ddom6
@@ -11,6 +21,12 @@ package com.mycompany.quanlykhachsan;
 public class QuanlyKhachsan {
 
     public static void main(String[] args) {
-
+        try {
+            DangNhap dangNhap = new DangNhap();
+            dangNhap.setLocationRelativeTo(null);
+            dangNhap.setVisible(true);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+            Logger.getLogger(QuanlyKhachsan.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

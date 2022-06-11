@@ -207,6 +207,7 @@ public final class TrangChu extends javax.swing.JFrame {
         btnQuanLyTK = new javax.swing.JMenuItem();
         MenuItemQLThue_Tra = new javax.swing.JMenuItem();
         MenuitemQLDoDung = new javax.swing.JMenuItem();
+        MenuitemQLDichVu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -289,6 +290,11 @@ public final class TrangChu extends javax.swing.JFrame {
         btnStatistic.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnStatistic.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\trend.png")); // NOI18N
         btnStatistic.setText("Thống kê");
+        btnStatistic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatisticActionPerformed(evt);
+            }
+        });
 
         btnLogout.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLogout.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\logout2.png")); // NOI18N
@@ -590,6 +596,7 @@ public final class TrangChu extends javax.swing.JFrame {
         });
         jMenu1.add(MenuItemQLThue_Tra);
 
+        MenuitemQLDoDung.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         MenuitemQLDoDung.setText("Quản lý đồ dùng");
         MenuitemQLDoDung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -597,6 +604,15 @@ public final class TrangChu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(MenuitemQLDoDung);
+
+        MenuitemQLDichVu.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        MenuitemQLDichVu.setText("Quản lý dịch vụ");
+        MenuitemQLDichVu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuitemQLDichVuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(MenuitemQLDichVu);
 
         jMenuBar1.add(jMenu1);
 
@@ -751,7 +767,9 @@ public final class TrangChu extends javax.swing.JFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             this.dispose();
             try {
-                new DangNhap().setVisible(true);
+                DangNhap dangNhap = new DangNhap();
+                dangNhap.setLocationRelativeTo(null);
+                dangNhap.setVisible(true);
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
                 Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -773,7 +791,9 @@ public final class TrangChu extends javax.swing.JFrame {
         if (dangNhapController.GetRoleCurrentAcount(TaiKhoan, MatKhau).equals("ADMIN")) {
             this.dispose();
             try {
-                new frmQLTaiKhoan(TaiKhoan, MatKhau).setVisible(true);
+                frmQLTaiKhoan fQLTaiKhoan = new frmQLTaiKhoan(TaiKhoan, MatKhau);
+                fQLTaiKhoan.setLocationRelativeTo(null);
+                fQLTaiKhoan.setVisible(true);
             } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -844,11 +864,28 @@ public final class TrangChu extends javax.swing.JFrame {
     private void MenuitemQLDoDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuitemQLDoDungActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        fromQuanlyDoDung fQuanlyDoDung = new fromQuanlyDoDung(TaiKhoan, MatKhau);
+        formQuanlyDoDung fQuanlyDoDung = new formQuanlyDoDung(TaiKhoan, MatKhau);
         fQuanlyDoDung.setLocationRelativeTo(this);
         fQuanlyDoDung.setVisible(true);
 
     }//GEN-LAST:event_MenuitemQLDoDungActionPerformed
+
+    private void MenuitemQLDichVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuitemQLDichVuActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        formQuanLyDichVu fQuanLyDichVu = new formQuanLyDichVu(TaiKhoan, MatKhau);
+        fQuanLyDichVu.setLocationRelativeTo(this);
+        fQuanLyDichVu.setVisible(true);
+    }//GEN-LAST:event_MenuitemQLDichVuActionPerformed
+
+    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frmThongKeDoanhSo fThongKeDoanhSo = new frmThongKeDoanhSo(TaiKhoan, MatKhau);
+        fThongKeDoanhSo.setLocationRelativeTo(null);
+        fThongKeDoanhSo.setVisible(true);
+
+    }//GEN-LAST:event_btnStatisticActionPerformed
 
     /**
      * @param args the command line arguments
@@ -888,6 +925,7 @@ public final class TrangChu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ListPhong;
     private javax.swing.JMenuItem MenuItemQLThue_Tra;
+    private javax.swing.JMenuItem MenuitemQLDichVu;
     private javax.swing.JMenuItem MenuitemQLDoDung;
     private javax.swing.JPopupMenu PopupMenuPhong;
     private javax.swing.JButton btnHome;
