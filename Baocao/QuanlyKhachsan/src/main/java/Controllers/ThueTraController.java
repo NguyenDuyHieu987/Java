@@ -6,8 +6,11 @@ package Controllers;
 
 import Database.ConnectDB;
 import Models.DichVuDaThue;
+import Models.HoaDon;
 import Models.ThueTraPhong;
 import Models.KhachHang;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -727,6 +730,47 @@ public class ThueTraController {
             rs.close();
             conn.close();
             return listThueTraPhongs;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+        }
+        return null;
+    }
+
+    public List<String> InHoaDon(String MaThue) {
+        List<String> listHoaDons = new ArrayList<>();
+
+        try {
+            Connection conn = ConnectDB.GetConnection();
+
+            String SqlQuery = "SELECT MaThue, KhachHang.TenKH, Phong.TenPhong, NgayBD, NgayKT, ThuePhong.TongTien, ThuePhong.TrangThai \n"
+                    + "    FROM ThuePhong, Phong, KhachHang \n"
+                    + "    WHERE ThuePhong.MaPhong = Phong.MaPhong AND KhachHang.MaKH = ThuePhong.MaKH\n"
+                    + "    AND MaThue = ?;";
+
+            conn.setAutoCommit(false);
+            PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
+            preparedStatement.setString(1, MaThue);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+
+                listHoaDons.add(rs.getString("MaThue"));
+                listHoaDons.add(rs.getString("TenKH"));
+                listHoaDons.add(rs.getString("TenPhong"));
+                listHoaDons.add(rs.getString("NgayBD"));
+                listHoaDons.add(rs.getString("NgayKT"));
+                long tongtien = new BigDecimal(rs.getDouble("TongTien")).longValue();
+                listHoaDons.add(String.valueOf(tongtien));
+                listHoaDons.add(rs.getString("TrangThai"));
+
+            }
+
+            conn.commit();
+            conn.setAutoCommit(true);
+            rs.close();
+            conn.close();
+            return listHoaDons;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Thông báo", JOptionPane.OK_CANCEL_OPTION);

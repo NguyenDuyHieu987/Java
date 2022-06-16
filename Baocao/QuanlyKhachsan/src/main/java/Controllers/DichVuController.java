@@ -154,16 +154,17 @@ public class DichVuController {
             preparedStatement1.setString(2, dichVuDaThue.getTenDichVu());
 
             ResultSet rs1 = preparedStatement1.executeQuery();
-            String DoDungMatHongDaThem = "";
-            while (rs1.next()) {
-                DoDungMatHongDaThem = rs1.getString("TenDichVu");
+            List<String> listdichvudathue = new ArrayList<>();
 
+            while (rs1.next()) {
+                String DoDungMatHongDaThem = rs1.getString("TenDichVu");
+                listdichvudathue.add(DoDungMatHongDaThem);
             }
 
             PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
             PreparedStatement preparedStatemen2 = conn.prepareStatement(SqlQueryUpdate);
             int kt = 0, kt1 = 0;
-            if (DoDungMatHongDaThem.equals("")) {
+            if (!listdichvudathue.contains(dichVuDaThue.getTenDichVu())) {
                 preparedStatement.setString(1, dichVuDaThue.getMaThue());
                 preparedStatement.setString(2, dichVuDaThue.getTenDichVu());
                 preparedStatement.setInt(3, dichVuDaThue.getSoGio());

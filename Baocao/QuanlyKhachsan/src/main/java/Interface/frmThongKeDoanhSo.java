@@ -137,6 +137,7 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Thống kê");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
@@ -253,7 +254,7 @@ public class frmThongKeDoanhSo extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
 
         spnMonthEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        spnMonthEnd.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMonthEnd.setModel(new javax.swing.SpinnerNumberModel(12, 1, 12, 1));
 
         cbYear.setEditable(true);
         cbYear.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

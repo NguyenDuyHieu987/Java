@@ -72,7 +72,7 @@ public class formQuanLyDichVu extends javax.swing.JFrame {
         tbDichVuDaThue.setModel(defaultTableModelDichVuDaThue);
         defaultTableModelDichVuDaThue.addColumn("Mã thuê");
         defaultTableModelDichVuDaThue.addColumn("Tên dịch vụ");
-        defaultTableModelDichVuDaThue.addColumn("Số lượng");
+        defaultTableModelDichVuDaThue.addColumn("Số giờ (lần)");
         defaultTableModelDichVuDaThue.addColumn("Tổng tiền");
         tbDichVuDaThue.getColumnModel().getColumn(1).setPreferredWidth(150);
 

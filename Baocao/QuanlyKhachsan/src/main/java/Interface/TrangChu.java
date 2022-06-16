@@ -290,6 +290,11 @@ public final class TrangChu extends javax.swing.JFrame {
         btnStatistic.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnStatistic.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\trend.png")); // NOI18N
         btnStatistic.setText("Thống kê");
+        btnStatistic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatisticActionPerformed(evt);
+            }
+        });
 
         btnLogout.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLogout.setIcon(new javax.swing.ImageIcon("D:\\Java\\Baocao\\QuanlyKhachsan\\src\\main\\java\\imgs\\logout2.png")); // NOI18N
@@ -872,6 +877,15 @@ public final class TrangChu extends javax.swing.JFrame {
         fQuanLyDichVu.setLocationRelativeTo(this);
         fQuanLyDichVu.setVisible(true);
     }//GEN-LAST:event_MenuitemQLDichVuActionPerformed
+
+    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frmThongKeDoanhSo fThongKeDoanhSo = new frmThongKeDoanhSo(TaiKhoan, MatKhau);
+        fThongKeDoanhSo.setLocationRelativeTo(null);
+        fThongKeDoanhSo.setVisible(true);
+
+    }//GEN-LAST:event_btnStatisticActionPerformed
 
     /**
      * @param args the command line arguments

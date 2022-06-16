@@ -729,7 +729,6 @@ public final class frmPhong extends javax.swing.JFrame {
 
         txtGia.setText(defaultTableModel.getValueAt(row, 4).toString());
         String Status = defaultTableModel.getValueAt(row, 5).toString();
-        System.out.println(Status);
         switch (Status) {
             case "Chưa thuê":
                 cbStatus.setSelectedIndex(0);
