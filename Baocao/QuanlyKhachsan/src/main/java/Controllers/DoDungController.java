@@ -165,18 +165,17 @@ public class DoDungController {
             PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
             PreparedStatement preparedStatemen2 = conn.prepareStatement(SqlQueryUpdate);
             int kt = 0, kt1 = 0;
-            if (listDoDungDaThem.isEmpty()) {
+
+            if (!listDoDungDaThem.contains(doDungTrongPhong.getTenDo())) {
                 preparedStatement.setString(1, doDungTrongPhong.getMaPhong());
                 preparedStatement.setString(2, doDungTrongPhong.getTenDo());
                 preparedStatement.setInt(3, doDungTrongPhong.getSoLuong());
                 kt = preparedStatement.executeUpdate();
-
             } else {
                 preparedStatemen2.setInt(1, doDungTrongPhong.getSoLuong());
                 preparedStatemen2.setString(2, doDungTrongPhong.getMaPhong());
                 preparedStatemen2.setString(3, doDungTrongPhong.getTenDo());
                 kt1 = preparedStatemen2.executeUpdate();
-
             }
 
             conn.commit();
@@ -532,16 +531,17 @@ public class DoDungController {
             preparedStatement1.setString(2, doDungMatHong.getTenDo());
 
             ResultSet rs1 = preparedStatement1.executeQuery();
-            String DoDungMatHongDaThem = "";
+            List<String> lisDoDoHongMat = new ArrayList<>();
             while (rs1.next()) {
-                DoDungMatHongDaThem = rs1.getString("TenDo");
+                String DoDungMatHongDaThem = rs1.getString("TenDo");
+                lisDoDoHongMat.add(DoDungMatHongDaThem);
 
             }
 
             PreparedStatement preparedStatement = conn.prepareStatement(SqlQuery);
             PreparedStatement preparedStatemen2 = conn.prepareStatement(SqlQueryUpdate);
             int kt = 0, kt1 = 0;
-            if (DoDungMatHongDaThem.equals("")) {
+            if (!lisDoDoHongMat.contains(doDungMatHong.getTenDo())) {
                 preparedStatement.setString(1, doDungMatHong.getMaThue());
                 preparedStatement.setString(2, doDungMatHong.getTenDo());
                 preparedStatement.setInt(3, doDungMatHong.getSoLuong());

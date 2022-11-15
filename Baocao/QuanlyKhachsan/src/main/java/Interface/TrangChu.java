@@ -880,10 +880,15 @@ public final class TrangChu extends javax.swing.JFrame {
 
     private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        frmThongKeDoanhSo fThongKeDoanhSo = new frmThongKeDoanhSo(TaiKhoan, MatKhau);
-        fThongKeDoanhSo.setLocationRelativeTo(null);
-        fThongKeDoanhSo.setVisible(true);
+
+        if (dangNhapController.GetRoleCurrentAcount(TaiKhoan, MatKhau).equals("ADMIN")) {
+            this.dispose();
+            frmThongKeDoanhSo fThongKeDoanhSo = new frmThongKeDoanhSo(TaiKhoan, MatKhau);
+            fThongKeDoanhSo.setLocationRelativeTo(null);
+            fThongKeDoanhSo.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Chỉ ADMIN mới được sử dụng chức năng này", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_btnStatisticActionPerformed
 

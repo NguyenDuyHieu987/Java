@@ -1796,9 +1796,8 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                         excelJtable = new XSSFWorkbook();
                         XSSFSheet fSheet = excelJtable.createSheet("HÓA ĐƠN");
                         defaultTableModelThue = (DefaultTableModel) tbThue.getModel();
-                        int row = tbThue.getSelectedRow();
-                        XSSFRow fRow = fSheet.createRow(0);
 
+                        XSSFRow fRow = fSheet.createRow(0);
                         List<String> listhoDons = thueTraController.InHoaDon(txtMaThue.getText());
                         for (int i = 0; i < listhoDons.size(); i++) {
                             XSSFCell cell = fRow.createCell(i);
@@ -1810,27 +1809,20 @@ public class frmThueTraPhong extends javax.swing.JFrame {
                         fileOutputStream = new FileOutputStream(fileChooser.getSelectedFile() + ".xlsx");
                         // dùng bộ nhớ điệm để lưu dữ liệu giúp cho việc xuất dữ liệu ko thông qua luồng trực tiếp mà thông qua luồng đệm nên lấy dự liệu nhanh hơn
                         bos = new BufferedOutputStream(fileOutputStream);
-                        try {
-                            excelJtable.write(bos);
-                        } catch (IOException ex) {
-                            Logger.getLogger(frmThueTraPhong.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        excelJtable.write(bos);
+
                         JOptionPane.showMessageDialog(null, "XUẤT FILE EXCEL THÀNH CÔNG");
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(frmThueTraPhong.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
-                        try {
-                            if (bos != null) {
-                                bos.close();
-                            }
-                            if (fileOutputStream != null) {
-                                fileOutputStream.close();
-                            }
-                            if (excelJtable != null) {
-                                excelJtable.close();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        if (bos != null) {
+                            bos.close();
+                        }
+                        if (fileOutputStream != null) {
+                            fileOutputStream.close();
+                        }
+                        if (excelJtable != null) {
+                            excelJtable.close();
                         }
                     }
                 }
